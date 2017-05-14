@@ -1,11 +1,5 @@
 from login import *
-
-def replace_characters(*args, string, replacement):
-    string2 = string
-    for arg in args:
-        string2 = string2.replace(arg, replacement)
-
-    return string2
+from utility import *
     
 date = time.strftime('%m/%d/%Y')#gets the current date in string format
 day = ''
@@ -16,11 +10,19 @@ even_rows = r3_soup.findAll('tr', class_='listroweven')
 school_days = dict()
 
 for i in range(0, len(odd_rows)):#parses html to get odd numbered school days
-    encoded1 = odd_rows[i].findChildren()[0].contents[0].encode('utf-8')#encode the navigable string, so it can be converted
-    string1 = str(encoded1)#convert navigable string to string
-    trimmed1 = replace_characters('\/','\,','>','<',' ', '\'', r'\n', 'b', string = string1, replacement = '')
+    index1 = 0
+    index2 = 1
 
-    encoded2 = odd_rows[i].findChildren()[1].contents[0].encode('utf-8')
+    if(len(odd_rows[i].findChildren()[0].contents) == 3):
+        index1 = 1
+    encoded1 = odd_rows[i].findChildren()[0].contents[index1].encode('utf-8')#the innerhtml of second element of odd_row
+    string1 = str(encoded1)
+    trimmed1 = replace_characters(' ', r'<b>',r'</b>', '\'', r'\n', 'b', string = string1, replacement = '')
+
+    if(str(odd_rows[i].findChildren()[1]) == r'<b>F (1)</b>'):
+         index2 = 2
+        
+    encoded2 = odd_rows[i].findChildren()[index2].contents[0].encode('utf-8')
     string2 = str(encoded2)
     trimmed2 = replace_characters(' ', '\'', r'\n', 'b', string = string2, replacement = '')
     
