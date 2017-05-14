@@ -2,55 +2,71 @@ import requests
 import time
 from bs4 import BeautifulSoup
 
-url1 = 'https://parents.ebnet.org/genesis/parents?gohome=true'
-url2 = 'https://parents.ebnet.org/genesis/j_security_check'
-url3 = 'https://parents.ebnet.org/genesis/parents?tab1=studentdata&tab2=attendance&tab3=class&action=form&studentid=91453'#class
-url4 = 'https://parents.ebnet.org/genesis/parents?tab1=studentdata&tab2=studentsummary&action=form&studentid=91453'#summary
-url5 = 'https://parents.ebnet.org/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=91453&action=form'#gradebook
-
+homeurl = 'https://parents.ebnet.org/genesis/parents?gohome=true'
+loginurl = 'https://parents.ebnet.org/genesis/j_security_check'
 
 j_username = 'riying2009@yahoo.com'#input('enter email: ')
 j_password = 'hill78hill78'#input('enter password: ')
 
-data2 = {
-
-    'j_username':j_username, #fill this out
-    'j_password':j_password #fill this out
+logindata = {
+    'j_username':j_username, 
+    'j_password':j_password
 }
-data3 = {
+
+session = requests.Session()
+
+home = requests.get(homeurl)
+login = session.post(loginurl, cookies=home.cookies, data=logindata)
+login_soup = BeautifulSoup(login.text, 'html5lib')#login
+
+
+studentid = ''
+dateRange = ''
+dateof = ''
+
+for item in login_soup.findAll('a'):
+    if item.get('href').startswith('/genesis/parents?tab1'):
+        string = item.get('href')
+        studentid = string[string.index(r'studentid=')+10:string.index(r'&action')]
+        dateRange = string[string.index(r'mpToView=')+9:]
+        dateof = string[string.index(r'date=')+5:string.index(r'&mpToView')]
+
+############################################################################################################
+attendenceurl = 'https://parents.ebnet.org/genesis/parents?tab1=studentdata&tab2=attendance&tab3=class&action=form&studentid=' + studentid#class
+summaryurl = 'https://parents.ebnet.org/genesis/parents?tab1=studentdata&tab2=studentsummary&action=form&studentid=' + studentid#summary
+gradebookurl = 'https://parents.ebnet.org/genesis/parents?tab1=studentdata&tab2=gradebook&tab3=weeklysummary&studentid=' + studentid + '&action=form'#gradebook
+courseurl = 'https://parents.ebnet.org/genesis/parents?'
+
+attendencedata = {
     'tab1':'studentdata',
     'tab2':'attendance',
     'tab3':'class',
     'action':'form',
-    'studentid':'91453'#need to change student id accordingly 
+    'studentid':studentid
 }
-data4 = {
+summarydata = {
     'tab1':'studentdata',
     'tab2':'studentsummary',
     'action':'form',
-    'studentid':'91453'
+    'studentid':studentid
 }
 
-data5 = {
+gradebookdata = {
     'tab1':'studentdata',
     'tab2':'gradebook',
     'tab3':'weeklysummary',
-    'studentid':'91453',
+    'studentid':studentid,
     'action':'form'
 }
 
-#loads up all the html using requests library
-session = requests.Session()
-
-r1 = requests.get(url1)
-r2 = session.post(url2, cookies=r1.cookies, data=data2)
-r3 = session.post(url3, cookies=r2.cookies, data=data3)
-r4 = session.post(url4, cookies=r2.cookies, data=data4)
-r5 = session.post(url5, cookies=r2.cookies, data=data5)
+attendence = session.post(attendenceurl, cookies=login.cookies, data=attendencedata)
+summary = session.post(summaryurl, cookies=login.cookies, data=summarydata)
+gradebook = session.post(gradebookurl, cookies=login.cookies, data=gradebookdata)
 
 #used to parse the html
-r3_soup = BeautifulSoup(r3.text, 'html5lib')#class
-r4_soup = BeautifulSoup(r4.text, 'html5lib')#summary
-r5_soup = BeautifulSoup(r5.text, 'html5lib')#gradebook
+attendence_soup = BeautifulSoup(attendence.text, 'html5lib')#attendence
+summary_soup = BeautifulSoup(summary.text, 'html5lib')#summary
+gradebook_soup = BeautifulSoup(gradebook.text, 'html5lib')#gradebook
+
 
 

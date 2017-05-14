@@ -1,1 +1,1 @@
-This is an app designed to help students at EBHS. It helps students to keep track of lab days.
+This app was originally designed to help students at EBHS to keep track of lab days. It has since expanded to give students notifications of gradebook updates.

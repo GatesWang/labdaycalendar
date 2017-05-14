@@ -4,8 +4,8 @@ from utility import *
 date = time.strftime('%m/%d/%Y')#gets the current date in string format
 day = ''
 
-odd_rows = r3_soup.findAll('tr', class_='listrowodd')
-even_rows = r3_soup.findAll('tr', class_='listroweven')
+odd_rows = attendence_soup.findAll('tr', class_='listrowodd')
+even_rows = attendence_soup.findAll('tr', class_='listroweven')
 
 school_days = dict()
 
@@ -91,8 +91,8 @@ if day != 'No School Today' and day != 'Lab day 0':#if its a school day and not 
     print('Day ' + day_num)
 
 if day != 'No School Today' and day != 'Lab day 0': #if there is school and it is not lab day 0
-    odd_rows = r4_soup.findAll('tr', class_='listrowodd')
-    even_rows = r4_soup.findAll('tr', class_='listroweven')
+    odd_rows = summary_soup.findAll('tr', class_='listrowodd')
+    even_rows = summary_soup.findAll('tr', class_='listroweven')
     
     science_periods = dict()
     other_periods = dict()

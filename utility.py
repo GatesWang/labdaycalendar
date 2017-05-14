@@ -3,4 +3,4 @@ def replace_characters(*args, string, replacement):
     for arg in args:
         string2 = string2.replace(arg, replacement)
 
-    return string2
+    return string2.strip()
