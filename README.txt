@@ -1,0 +1,1 @@
+This is an app designed to help students at EBHS. It helps students to keep track of lab days.
