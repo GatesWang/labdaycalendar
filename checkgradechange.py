@@ -43,17 +43,17 @@ def get_course_soups():
           soups.append(BeautifulSoup(item.text, 'html5lib'))
 
      return soups
-
-courses = get_course_soups()
-
-def initialize_grades():
      
+def get_grades():
+     for page in get_course_soups():
+          even_rows = page.findAll('tr', class_='listroweven')
+          odd_rows = page.findAll('tr', class_='listrowodd')
+          
+          for i in range(0,1):
+               print(even_rows[0].findChildren(class_='cellLeft')[4].text.split())
+                         
+get_grades()      
 
-def check_grades():
-
-
-def compare_grades():
-     
      
 
 
