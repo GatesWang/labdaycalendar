@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 homeurl = 'https://parents.ebnet.org/genesis/parents?gohome=true'
 loginurl = 'https://parents.ebnet.org/genesis/j_security_check'
 
-j_username = 'riying2009@yahoo.com'#input('enter email: ')
-j_password = 'hill78hill78'#input('enter password: ')
+j_username = 'email'#input('enter email: ')
+j_password = 'password'#input('enter password: ')
 
 logindata = {
     'j_username':j_username, 
