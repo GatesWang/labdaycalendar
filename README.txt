@@ -1,1 +1,1 @@
-This app was originally designed to help students at EBHS to keep track of lab days. It has since expanded to give students notifications of gradebook updates.
+This app was originally designed to help students at EBHS to keep track of lab days. Unfortunately I graduated before I could finish this project. I lost my login credentials, but the calendar portion of the project was and might still be fully functional. 
